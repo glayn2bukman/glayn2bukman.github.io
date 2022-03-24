@@ -1,11 +1,31 @@
 <!doctype html>
 <html>
     <head>
-        <meta charset="UTF-8"/>
+        <meta charset="utf-8">        
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
-        <title>Bukman</title>
 
+        <title>Calc</title>
+        <link rel="icon" type='image/x-icon' href="favicon.ico"/>
+
+        <!-- PWA particulars all WPA assets are in UI/ and not UI-dev/ -->
+        <link rel="manifest" href="/manifest.json">
+        <link rel="apple-touch-icon" href="static/icons/PWA/152.png">
+        <meta name="theme-color" content="white"/>
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="Calc">
+        <meta name="msapplication-TileImage" content="static/icons/PWA/144.png">
+        <meta name="msapplication-TileColor" content="#FFFFFF">
+
+    
+        <style id="gfont">
+            @font-face{
+                font-family: gfont;
+                src: url("static/fonts/SFNSDisplay-Light.otf");
+            }
+        </style>
         <link rel="stylesheet" href="static/bootstrap-3.3.7/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="static/loading.css">
         <link rel="stylesheet" href="static/index.css">
 
         <!-- jQuery library -->
@@ -14,53 +34,539 @@
         <!-- Latest compiled JavaScript -->
         <script src="static/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>    
 
+<!--    
+        <script src="static/dropzone.min.js"></script>
+-->        
+        <script src="static/files.js"></script>
+        <script src="static/globals.js"></script>
+        <script src="static/index.js"></script>
 
-        <link rel="stylesheet" href="scripts/css/index.css">
+        <!-- sweet alert -->
+        <script src="static/sweetalert/sweetalert.min.js"></script>
+        <link rel="stylesheet" href="static/sweetalert/sweetalert.css">
+
+        <script src="static/localforage.nopromises.min.js">
+            // this script is best to use on phonegap when cordova-plugin-sqlite is included in config.xml file
+            // as it enables the lib actually store data persistently in an sqlite db!
+            // available functions are: getItem,setItem,removeItem,clear
+        </script>
+
+        <link id="theme" rel="stylesheet" href="">
+
+        <script>
+            $(document).ready(function () {
+              $(".navbar-nav li div").click(function(event) {
+                $(".navbar-collapse").collapse('hide');
+              });
+            });
+                
+        </script>
+
+        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 
     </head>
 
-    <body>
-        <div class="container">
-            <div>
-                <h2>
-                    <img class="dp-img" src="images/JMS/icon.png">
-                    JMS RT
-                </h2>
-                <div class="details">
-                    This is a private app for the JMS Field Staff. Download it 
-                    <a href="https://github.com/glayn2bukman/jms-app/releases/download/v1-recovery/JMS_RT-debug.2728506.2.apk">here</a> or try out
-                    <a href="https://github.com/glayn2bukman/jms/releases/download/0.0.2/JMSv2-test.apk">v2</a>
-                </div>
-            </div>
+    <body oncontextmenu="return false;">
+        <div id="preview_div" style="display:none; overflow:auto; text-align:center;">
+            <div class="clickable" style="
+                position: fixed;
+                right: 1%;
+                padding: 5px;
+                color: red;
+                background-color: #fff;
+                border: 1px solid red;
+                top:1%;
+                z-index: 1;
+                border-radius:5px;
+                text-align: center;
 
-            <div>
-                <h2>
-                    <img class="dp-img" src="images/JERM/icon.png">
-                    JERM Tools
-                </h2>                
-                <div class="details">
-                    This is a private app for JERM Technology staff. Download it 
-                    <a href="https://github.com/glayn2bukman/jerm-tools/releases/download/0.0.1/JERMTool-debug.apk">here</a>
-                </div>
+                "
+                
+                onclick="done_previewing()">done
             </div>
+            
+            <div style="
+                    font-size:1.8em;
+                    margin-left: 10px;
+                    border-radius: 5px;
+                    background-color: #1f1212;
+                    border:1px solid black;
+                    position:fixed;
+                    top:45%;
+                    color:blue;
+                ">
+                <span class="glyphicon glyphicon-plus-sign" style="margin:2px;" onclick="zoom('in');"></span><br>
+                <!--<span class="glyphicon glyphicon-minus-sign" style="margin:2px;"  onclick="zoom('out')"></span>-->
+            </div>
+            
+            <img id="preview-img" class="img-responsive2" style="margin:0 auto;"/>
+        </div>
+                
+        <div id="uploading" style="display:none;">
+            <span id='upload_slider'></span>
+            Uploading Files: <span id="upload_progress">0.00%</span>
+        </div>
+        <div id="notification" style="display:none"></div>
 
-            <div>
-                <h2>
-                    <img class="dp-img" src="images/JERM/icon.png">
-                    JermConfig
-                </h2>
-                <div class="details">
-                    Write and Parse complex config files with Python(2 and 3).<br>
-                    Supported types are <b>list</b>, <b>dict</b>, 
-                    <b>int</b>,<b>float</b></b>,<b>bool</b> and <b>string</b>(default). 
-                    Also, you can refer to environment variables!. For more info,
-                    check out the <a href="https://github.com/glayn2bukman/JermConfig">github repo</a><br>
-                    For Linux users, you can use the <i>deb</i> installer
-                    <a href="https://github.com/glayn2bukman/JermConfig/releases/download/0.0.1/JermConfig-0.0.1-3.deb">here</a>
+        <div class="modal fade" id="attachment_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" style="width:90%;" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Media Caption</h4>
+              </div>
+              <div class="modal-body">
+                    <div class="form-group">
+                        <input id="caption" type="text" class="form-control" 
+                            placeholder="type caption here">
+                    </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" 
+                    data-dismiss="modal" onclick="cancel_attachment()">Cancel</button>
+                <button type="button" class="btn btn-success" onclick="send_message_with_attachment()">get media</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal fade" id="caption_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" style="width:90%;" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Media Caption</h4>
+              </div>
+              <div class="modal-body">
+                    <div class="form-group">
+                        <input id="_caption" type="text" class="form-control" 
+                            placeholder="type caption here">
+                    </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" 
+                    data-dismiss="modal" onclick="cancel_attachment()">Cancel</button>
+                <button type="button" class="btn btn-success" onclick="hide_modal('caption_modal');CAPTION_TARGET(document.getElementById('_caption').value);">get media</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="themes_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" style="width:90%;" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Themes</h4>
+              </div>
+              <div class="modal-body" style="overflow: auto; max-height: 250px;">
+                    <div id="themes"></div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Done</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal fade" id="settings_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" style="width:90%;" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Settings</h4>
+              </div>
+              <div class="modal-body">
+                    <div class="setting" onclick="edit_account()">1) Account Password</div>
+                    <!--<div class="setting">Logout Delay</div>-->
+                    <div class="setting" style="border-bottom:0px;"
+                        onclick="
+                        hide_modal('settings_modal');
+                        show_modal('themes_modal');">2) Themes</div>
+                    <div class="setting" onclick="edit_max_inbox()">3) Inbox Limit</div>
+                    <div id="vibrate" class="setting" onclick="edit_vibration(this)">4) Vibration: On</div>
+                    <div class="setting" onclick="edit_upload_chunksize()">5) Upload Chunk Size</div>
+                    <div class="setting" onclick="edit_calc_code()">6) Calc Magic Code</div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Done</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal fade" id="sure_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" style="width:90%;" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="sure_modal_title">Logout</h4>
+              </div>
+              <div class="modal-body" style="overflow: auto; max-height: 250px;">
+                    are you sure?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-success" onclick="sure_modal_action()">Yes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div id="main_div" style="display:none">
+            <div id="logout" onclick="back()" style="display:none;">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </div>
+            <span id="back" class="glyphicon glyphicon-chevron-left" onclick="back()"></span>
+
+
+            <div id="online_state" class="blink" style="display:none"></div>
+
+            <div id="login-div" class="container" style="
+                display:block;
+                position:absolute;
+                width:100%; left:0%;
+                height:100%;top:0%;
+                
+                background: #1f1212 url('data/target2.jpg') no-repeat;
+                background: #1f1212;
+                background-position: center;
+                background-size: cover;
+            ">
+                
+                <p>.</p>
+                <p>.</p>
+                
+                <img id="logo" class="img-circle img-responsive center-block"
+                    src="static/icons/hearts.png" width="100" height="100">
+                            
+                <p>.</p>
+                <p>.</p>
+
+                <form>
+                    <div class="input-group">
+                        <span class="input-group-addon" style="opacity:0.8;"
+                            ><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="uname" type="text" class="form-control" 
+                            name="uname" placeholder="Username"
+                            style="opacity:0.8;">
+                    </div>
+                    
+                    <p></p>
+                    
+                    <div class="input-group">
+                        <span class="input-group-addon" style="opacity:0.8;"
+                            ><i class="glyphicon glyphicon-lock"></i></span>
+                        <input id="pswd" type="password" class="form-control" 
+                            name="pswd" placeholder="Password"
+                            style="opacity:0.8;">
+                    </div>
+
+                    <p></p><p></p>
+
+                    <div class="pager">
+                        <button type="button" class="next btn btn-danger" style="width:50%;"
+                            onclick="login()"
+                        >Login</button>
+                    </div> 
+                    
+                </form>
+
+            </div>
+            
+            <div id="groups-div" style="margin-top:25px; display:none;"></div>
+                        
+            <div id="chats" style="display:none;">
+                <div id="chats-container-div" class="chats-container-div">
+                    
+                    <div class="chats_div">
+                    </div>
+                          
+                </div>
+                
+                <div id="bottom" class="input-group bottom">
+                        <form method="POST" id="msgForm" style="display:none;">
+                            <input type="hidden" id="_group" name="group">
+                            <input type="hidden" id="_sender" name="sender">
+                            <input type="hidden" id="_msg" name="msg">
+                        </form>
+
+                        <form method="POST" id="cameraDropTarget" enctype="multipart/form-data" class="dropzone dz-clickable" style="display:none;">
+                            <input type="hidden" name="group">
+                            <input type="hidden" name="sender">
+                            <input type="hidden" name="msg">
+                            <span id="fname"></span>
+                        </form>
+
+                        <form method="POST" id="videoDropTarget" enctype="multipart/form-data" class="dropzone dz-clickable" style="display:none;">
+                            <input type="hidden" name="group">
+                            <input type="hidden" name="sender">
+                            <input type="hidden" name="msg">
+                            <span id="fname"></span>
+                        </form>
+
+                    <!--
+                        <form method="POST" id="audioDropTarget" enctype="multipart/form-data" class="dropzone dz-clickable" style="display:none;">
+                            <input type="hidden" name="group">
+                            <input type="hidden" name="sender">
+                            <input type="hidden" name="msg">
+                            <span id="fname"></span>
+                        </form>
+                    -->
+
+                        <form method="POST" id="galleryDropTarget" enctype="multipart/form-data" class="dropzone dz-clickable" style="display:none;">
+                            <input type="hidden" name="group">
+                            <input type="hidden" name="sender">
+                            <input type="hidden" name="msg">
+                            <span id="fname"></span>
+                        </form>
+
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-cog"
+                            onclick="show_modal('settings_modal');"></i>
+                    </span>
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-paperclip"
+                            onclick="open_emoji_div()"></i>
+                    </span>
+                    <input oncontextmenu="return true;" id="entry" type="text" class="form-control" placeholder="type here...">
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-chevron-right"
+                            onclick="send_message()"></i>
+                    </span>
                 </div>
             </div>
+        </div>
+        
+        <div id="calc_div" style='display:none2;'>
+            <div id="calc_input"></div>
+            <div id="calc_output"></div>
+            <div id="calc_btn_div">
+                <div class="calc_btn_row">
+                    <div class="calc_btn">7</div>
+                    <div class="calc_btn">8</div>
+                    <div class="calc_btn">9</div>
+                    <div class="calc_btn">Del</div>
+                </div>
+                <div class="calc_btn_row">
+                    <div class="calc_btn">4</div>
+                    <div class="calc_btn">5</div>
+                    <div class="calc_btn">6</div>
+                    <div class="calc_btn">/</div>
+                </div>
+                <div class="calc_btn_row">
+                    <div class="calc_btn">1</div>
+                    <div class="calc_btn">2</div>
+                    <div class="calc_btn">3</div>
+                    <div class="calc_btn">x</div>
+                </div>
+                <div class="calc_btn_row">
+                    <div class="calc_btn">.</div>
+                    <div class="calc_btn">0</div>
+                    <div class="calc_btn">=</div>
+                    <div class="calc_btn">-</div>
+                </div>
+                <div class="calc_btn_row">
+                    <div class="calc_btn">000</div>
+                    <div class="calc_btn">(</div>
+                    <div class="calc_btn">)</div>
+                    <div class="calc_btn">+</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="emoji_div" style="display:none;">
+            <span style="
+                position:fixed;
+                bottom:295px;
+                left:1%;
+                border-radius: 10px;
+                padding:5px;
+                background-color: white;
+                color:green;
+                z-index: -10;
+                text-align:center;
+            ">
+                <img class="media-ico" src="static/icons/camera.png" onclick="document.getElementById('_caption').value='';CAPTION_TARGET=captureImage; show_modal('caption_modal');">
+                <img class="media-ico" src="static/icons/video.png" onclick="document.getElementById('_caption').value='';CAPTION_TARGET=captureVideo; show_modal('caption_modal');">
+                <img class="media-ico" src="static/icons/audio.png" onclick="document.getElementById('_caption').value='';CAPTION_TARGET=captureAudio; show_modal('caption_modal');">
+                <img class="media-ico" src="static/icons/gallery.png" onclick="DROPZONE_TARGET=document.getElementById('galleryDropTarget'); show_modal('attachment_modal');">
+            </span> 
+
+            <span style="
+                position:fixed;
+                bottom:295px;
+                right:1%;
+                border-radius: 10px;
+                padding:5px;
+                background-color: white;
+                color:red;
+                z-index: -10;
+                text-align:center;
+            " onclick="close_emoji_div()">close</span>
+
+            <div style="background-color:#200">
+<!--
+                <span class="clickable" style="color:#ddd;font-weight:bold;margin-left:5px;"
+                    onclick="document.getElementById('files').click()">Attach File...</span>
+                <span class="clickable" style="
+                    color:white;
+                    font-weight:bold;
+                    float:right;
+                    font-size:1em;
+                    margin-right:5px;
+                    background-color:#f00;
+                    border-radius:50%;
+                    width:20px;
+                    text-align:center;
+                    "
+                    onclick="close_emoji_div()">x</span>
+-->
+            </div>
+        </div>
+        
+        <div id="quoted" style="display:none;">
+            <div style="
+                position:fixed;
+                bottom:125px;
+                right:1%;
+                border-radius: 10px;
+                padding:5px;
+                background-color: white;
+                color:red;
+                z-index: 2;
+                text-align:center;
+            " onclick="close_quote()">close</div>
+
+            <span id="quoted_msg" style="">hello, darness my od frnd...</span>
 
         </div>
-    </body>
+        
+        <div id='loading' class="lds-spinner" style="display:none;"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 
+
+        <input type="hidden" id="__uname__">
+        <input type="hidden" id="__group__">
+
+        <div id="video_compress_div" style="display:none;">
+            <div>Compressing Video...</div>
+            <div id="video_compress_level">X %</div>
+        </div>
+
+        <!-- zib with dropzone.js is that u gotta init it the moment u include d script. we cant wait for window.onload -->
+        <script src="static/dropzone.min.js"></script>
+        <script>
+            Dropzone.options.galleryDropTarget = { // my form's id is galleryDropTarget
+                paramName: 'file',
+                chunking: true,
+                forceChunking: true,
+                url: POST_MESSAGE_WITH_ATTACHMENT_URL,
+                maxFilesize: 1025, // megabytes
+                chunkSize: 1000000, // bytes
+
+                init: function() {
+                    this.on("queuecomplete", function(file){
+                        document.getElementById("uploading").style.display = "none";                        
+                    });
+
+                    this.on("uploadprogress", function(file,progress,bytesSent){
+                        if(bytesSent>file.size) bytesSent = file.size;
+                        
+                        let _progress = ((bytesSent/file.size)*100).toFixed(2);
+
+                        document.getElementById("upload_progress").innerHTML = _progress+"%";
+                        document.getElementById("upload_slider").style.width = _progress+"%";
+                        
+                        document.getElementById("uploading").style.display = "block";
+                        
+                        if(bytesSent>=file.size) {
+                            console.log(file.xhr.responseText);
+
+                            let obj = {
+                                status: 200,
+                                has_attachments: true,
+                                responseText: file.xhr.responseText,
+                                callback: sent_message,
+                            }
+                            
+                            obj.callback();
+
+                        }
+                    });
+                }
+            }
+
+            Dropzone.options.cameraDropTarget = {
+                paramName:'file',chunking:true,forceChunking:true,url:POST_MESSAGE_WITH_ATTACHMENT_URL,maxFilesize:1025,chunkSize:1000000,
+                
+                acceptedFiles: 'image/*',
+                capture: 'camera',
+
+                init: function() {
+                    this.on("queuecomplete", function(file){document.getElementById("uploading").style.display = "none";});
+                    this.on("uploadprogress", function(file,progress,bytesSent){
+                        if(bytesSent>file.size) bytesSent = file.size;
+                        let _progress = ((bytesSent/file.size)*100).toFixed(2);
+                        document.getElementById("upload_progress").innerHTML = _progress+"%";
+                        document.getElementById("upload_slider").style.width = _progress+"%";
+                        document.getElementById("uploading").style.display = "block";
+                        if(bytesSent>=file.size) {
+                            console.log(file.xhr.responseText);
+                            let obj = {status:200,has_attachments:true,responseText:file.xhr.responseText,callback:sent_message,};
+                            obj.callback();
+                        }
+                    });
+                }
+            }
+
+            Dropzone.options.videoDropTarget = {
+                paramName:'file',chunking:true,forceChunking:true,url:POST_MESSAGE_WITH_ATTACHMENT_URL,maxFilesize:1025,chunkSize:1000000,
+                
+                acceptedFiles: 'video/*',
+                capture: 'camcoder',
+
+                init: function() {
+                    this.on("queuecomplete", function(file){document.getElementById("uploading").style.display = "none";});
+                    this.on("uploadprogress", function(file,progress,bytesSent){
+                        if(bytesSent>file.size) bytesSent = file.size;
+                        let _progress = ((bytesSent/file.size)*100).toFixed(2);
+                        document.getElementById("upload_progress").innerHTML = _progress+"%";
+                        document.getElementById("upload_slider").style.width = _progress+"%";
+                        document.getElementById("uploading").style.display = "block";
+                        if(bytesSent>=file.size) {
+                            console.log(file.xhr.responseText);
+                            let obj = {status:200,has_attachments:true,responseText:file.xhr.responseText,callback:sent_message,};
+                            obj.callback();
+                        }
+                    });
+                }
+            }
+
+            /*
+            Dropzone.options.audioDropTarget = {
+                paramName:'file',chunking:true,forceChunking:true,url:POST_MESSAGE_WITH_ATTACHMENT_URL,maxFilesize:1025,chunkSize:1000000,
+                
+                acceptedFiles: 'audio/*',
+                capture: 'microphone',
+
+                init: function() {
+                    this.on("queuecomplete", function(file){document.getElementById("uploading").style.display = "none";});
+                    this.on("uploadprogress", function(file,progress,bytesSent){
+                        if(bytesSent>file.size) bytesSent = file.size;
+                        let _progress = ((bytesSent/file.size)*100).toFixed(2);
+                        document.getElementById("upload_progress").innerHTML = _progress+"%";
+                        document.getElementById("upload_slider").style.width = _progress+"%";
+                        document.getElementById("uploading").style.display = "block";
+                        if(bytesSent>=file.size) {
+                            console.log(file.xhr.responseText);
+                            let obj = {status:200,has_attachments:true,responseText:file.xhr.responseText,callback:sent_message,};
+                            obj.callback();
+                        }
+                    });
+                }
+            }  
+            */      
+        </script>
+
+    </body>
 </html>

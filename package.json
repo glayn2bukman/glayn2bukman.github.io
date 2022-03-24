@@ -1,0 +1,17 @@
+/* this file enables us to run this script from the desktop environment using nwjs
+   my nwjs installation is in path "/home/bukman/Documents/nwjs-v0.26.6-linux-x64/nw"
+*/
+{
+    "name": "PChat ",
+    "version": "0.0.1",
+    "main": "index.html",
+
+    "window": {
+        "toolbar": true,
+        "width": 380,
+        "height": 620,
+        "icon":"data/calc.png"
+        // "kiosk": true /* this will open the app in fullscreen mode like a game (no borders, etc)*/
+        //"fullscreen":true /*same as kiosk*/
+    }
+}

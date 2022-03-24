@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<widget id="org.jerm.pchat" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>Calc</name>
+    <description>Chat-App</description>
+
+    <author email="bukman@jermtechnology.com" href="http://www.jermtechnology.com">Jerm Technology</author>
+    <content src="index.html" />
+    <!--<preference name="phonegap-version" value="cli-6.3.0" />-->
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="android-minSdkVersion" value="19"/>
+    
+    <!-- lock to portait -->
+    <preference name="orientation" value="portrait" />
+
+    <feature name="App">
+        <param name="android-package" value="org.apache.cordova.App" />
+    </feature>
+    
+    <!-- use latest version of phonegap...this version is displayed in the phonegap web -->
+    <preference name="phonegap-version" value="cli-7.0.1" />
+
+    <plugin name="cordova-plugin-whitelist" />
+
+    <allow-navigation href="*" />
+    <access origin="*" />
+
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <allow-intent href="market:*" />
+    
+    <icon src="www/data/calc.png" gap:role="default" />
+    
+    <plugin name="cordova-plugin-vibration" />
+    <plugin name="cordova-plugin-sqlite" />
+    <plugin name="cordova-plugin-device" />
+    <plugin name="cordova-plugin-file-transfer" />
+
+    <plugin name="cordova-plugin-media-capture" source="npm" spec="2.0.0"/>
+    <plugin name="cordova-plugin-media" spec="~4.0.0" />
+    <plugin name="cordova-plugin-camera" source="npm" spec="~2.4.1" />
+
+    <plugin name="cordova-plugin-prevent-screenshot" />
+
+    <!-- allow http connections in android 9+
+        1. add ``xmlns:android="http://schemas.android.com/apk/res/android"`` to <wdiget> tag
+        2. add this `edit-config` tag to the `<platform name="android">` tag
+    -->
+    <platform name="android">
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+            <application android:usesCleartextTraffic="true" />
+        </edit-config>
+    </platform>
+
+    <!--<plugin name="cordova-plugin-video-editor" />-->    
+</widget>
