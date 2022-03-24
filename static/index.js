@@ -160,8 +160,7 @@ function generate_reference_id(fname){
     return _id;
 }
 
-function activate_grp_chats()
-{
+function activate_grp_chats(){
     for (var i=0; i<GROUPS.length; i++)
     {
         CHATS[GROUPS[i]]["chat-div"].style.display = "none";
@@ -206,8 +205,7 @@ function activate_grp_chats()
     }
 }
 
-function show_groups()
-{
+function show_groups(){
     if (!GROUPS.length)
     {
         flag_error("sorry, you are not in any active group!");
@@ -310,12 +308,10 @@ function media_html(msg){
 
 }
 
-function attempted_login()
-{
+function attempted_login(){
     stop_loading();
 
-    if (this.status===200)
-    {
+    if (this.status===200){
 
         write_local_data('app_killed','yes',function(e){},function(v){});
         
@@ -542,8 +538,7 @@ function attempted_login()
     }
 }
 
-function done_setting_theme()
-{
+function done_setting_theme(){
     stop_loading();
     
     if(this.status===200)
@@ -578,8 +573,7 @@ function done_setting_theme()
     }
 }
 
-function set_theme()
-{
+function set_theme(){
     hide_modal("themes_modal");
 
     var req = new XMLHttpRequest();
@@ -654,8 +648,7 @@ function _req_timeout(){
     start_loading();
 }
 
-function _login()
-{
+function _login(){
     var req = new XMLHttpRequest();
     
     req.open("post", LOGIN_URL, true);
@@ -682,8 +675,7 @@ function _login()
 
 }
 
-function sent_message()
-{
+function sent_message(){
     close_emoji_div();
 
     stop_loading();
@@ -903,8 +895,7 @@ function send_message(){
     close_emoji_div(); close_quote();
 }
 
-function cancel_attachment()
-{
+function cancel_attachment(){
     document.getElementById("caption").value = "";
     document.getElementById('form').reset();
     hide_modal("attachment_modal");
@@ -943,8 +934,7 @@ function send_message_with_attachment(){
 }
 
 
-function got_inbox()
-{
+function got_inbox(){
     if (this.status===200)
     {        
         var reply = JSON.parse(this.responseText);
@@ -1128,8 +1118,7 @@ function got_inbox()
 }
 
 
-function get_inbox()
-{
+function get_inbox(){
     
     var grp = document.getElementById("__group__").value;
     grp = grp.length?":embedded:"+grp:grp;  
@@ -1185,8 +1174,7 @@ function _to_grps(){
     hide_modal("sure_modal");
 }
 
-function back()
-{
+function back(){
     if(
         ("block"==document.getElementById("calc_div").style.display)||
         (""==document.getElementById("calc_div").style.display)
@@ -1300,20 +1288,22 @@ function _load_static_crypt(media_div,trials_left=3){
     document.head.appendChild(static_crypt_js);
 }
 
-function start_loading_media(media_div)
-{
+function start_loading_media(media_div){
+    /*
     if(!staticCryptLoaded){
         if(!staticCryptLoading){_load_static_crypt(media_div);}
         return;
     }
+    */
 
     var target = media_div.getAttribute("data");
     notify("loading media...");
     media_div.style.display = "none";
     
-    if(media_div.getAttribute("mediatype")!="img")
-        //document.getElementById(target).src=FILE_ATTACHMENT_PATH+target;
-        _decrypt_media(document.getElementById(target),FILE_ATTACHMENT_PATH+target);
+    if(media_div.getAttribute("mediatype")!="img"){
+        document.getElementById(target).src=FILE_ATTACHMENT_PATH+target;
+        //_decrypt_media(document.getElementById(target),FILE_ATTACHMENT_PATH+target);
+    }
     else
     {
         var bgImg = new Image();
@@ -1330,8 +1320,8 @@ function start_loading_media(media_div)
         bgImg.loading_div = d;
 
         bgImg.onload = img_loaded;
-        //bgImg.src = FILE_ATTACHMENT_PATH+target;
-        _decrypt_media(bgImg,FILE_ATTACHMENT_PATH+target);
+        bgImg.src = FILE_ATTACHMENT_PATH+target;
+        //_decrypt_media(bgImg,FILE_ATTACHMENT_PATH+target);
     }
     document.getElementById(target).style.display = "block";
 
@@ -1377,8 +1367,7 @@ function preview_img_loaded(){
     }
 }
 
-function preview_img()
-{
+function preview_img(){
     document.getElementById("main_div").style.opacity = "0.1";
     document.getElementById("preview-img").src = "";
     document.getElementById("preview-img").style.width = "";
@@ -1393,8 +1382,7 @@ function preview_img()
     document.getElementById("preview_div").style.display = "block";    
 }
 
-function done_previewing()
-{
+function done_previewing(){
     document.getElementById("main_div").style.opacity = "1"
     document.getElementById("preview_div").style.display = "none";
 }
@@ -1440,8 +1428,7 @@ function zoom(direction, scale=0){
 */
 }
 
-function checked_online_status()
-{
+function checked_online_status(){
     if (this.status===200)
     {
         if (this.responseText=="online" /*&& 
@@ -1458,8 +1445,7 @@ function checked_online_status()
     }
 }
 
-function check_online_status()
-{
+function check_online_status(){
     if(!ACTIVE_GROUP.length)
     // we only display group statuses not user statuses!
     {
@@ -1486,8 +1472,7 @@ function check_online_status()
     
 }
 
-function edited_account()
-{
+function edited_account(){
     stop_loading();
     
     if (this.status===200)
@@ -1516,8 +1501,7 @@ function edited_account()
     }
 }
 
-function edit_account()
-{
+function edit_account(){
     hide_modal("settings_modal");
 
     swal({
@@ -1580,8 +1564,7 @@ function edit_account()
     );
 }
 
-function edited_max_inbox()
-{
+function edited_max_inbox(){
     stop_loading();
     
     if (this.status===200)
@@ -1605,8 +1588,7 @@ function edited_max_inbox()
     }
 }
 
-function edit_max_inbox()
-{
+function edit_max_inbox(){
     hide_modal("settings_modal");
 
     swal({
@@ -2294,14 +2276,12 @@ function captureVideo(_msg_=""){
 
 // *****************************************************************************
 function init(){
-    function fade_logo()
-    {
+    function fade_logo(){
         document.getElementById("logo").style.opacity = "0.2";
         
         setTimeout(unfade_logo, 1500);
     }
-    function unfade_logo()
-    {
+    function unfade_logo(){
         document.getElementById("logo").style.opacity = "1";
         setTimeout(fade_logo, 1500);
     }
@@ -2315,8 +2295,7 @@ function init(){
     
     setInterval(check_online_status, CHECK_ONLINE_STATUS_RATE*1000);
 
-    if (document.getElementById("__uname__").value.length)
-    {
+    if (document.getElementById("__uname__").value.length){
         login_embedded(document.getElementById("__uname__").value, document.getElementById("__group__").value);
     }
 
@@ -2334,8 +2313,7 @@ function init(){
 
     document.getElementById("entry").addEventListener("keyup",function(e){e.preventDefault();if (e.keyCode === 13){send_message();}});
 
-    {
-        // emojis. these should be ignored if version doesnt yet support em
+    { // emojis. these should be ignored if version doesnt yet support em
         function emoji_clicked(){
             var em = this.src.split("/");
             em = em[em.length-1];
