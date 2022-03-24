@@ -1,0 +1,38 @@
+/*Art: Motocycle*/
+/*Art/art.jpg*/
+body{
+    background:#1f1212;
+
+    background: #1f1212 url("../backgrounds/Art/art.jpg") no-repeat;
+    
+    background-position: center;
+    background-size: cover;
+    
+}
+
+.incoming{
+    color: #000;    
+    border: 1px solid #000;
+}
+
+.outgoing{
+    color: #000;
+    border: 1px solid #fff;
+}
+
+.sender{
+    color: #000;
+    opacity: 0.8;
+}
+
+.msg{
+}
+
+.time{
+    color: #000;
+    opacity: 0.8;
+}
+
+.date{
+    color: #333;
+}

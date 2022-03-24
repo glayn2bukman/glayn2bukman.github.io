@@ -1,0 +1,38 @@
+/*Art: Color Blend*/
+/*Art/colors.jpg*/
+body{
+    background:#1f1212;
+
+    background: #1f1212 url("../backgrounds/Art/colors.jpg") no-repeat;
+    
+    background-position: center;
+    background-size: cover;
+    
+}
+
+.incoming{
+    color: #fff;    
+    border: 1px solid orange;
+}
+
+.outgoing{
+    color: #fff;
+    border: 1px solid green;
+}
+
+.sender{
+    color: #ddd;
+    opacity: 0.7;
+}
+
+.msg{
+}
+
+.time{
+    color: #ddd;
+    opacity: 0.7;
+}
+
+.date{
+    color: #ad8;
+}

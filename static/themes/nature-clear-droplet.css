@@ -1,0 +1,50 @@
+/*Nature: Droplets*/
+/*Nature/clear-droplets.jpg*/
+body{
+    background:#1f1212;
+
+    background: #1f1212 url("../backgrounds/Nature/clear-droplets.jpg") no-repeat;
+    
+    background-position: center;
+    background-size: cover;
+    
+}
+
+.incoming{
+    color: #6ab187;    
+    /*border: 1px solid orange;*/
+    
+    background: #100;
+    
+    opacity: 0.8;
+}
+
+.outgoing{
+    color: #6ab187;
+    /*border: 1px solid red;*/
+
+    background: #001;
+    
+    opacity: 0.8;
+}
+
+.sender{
+    color: #20948b;
+    opacity: 0.6;
+}
+
+.msg{
+}
+
+.time{
+    color: #20948b;
+    opacity: 0.6;
+}
+
+.date{
+    color: #444;
+    
+    background: #ddd;
+    
+    border-radius: 5px;
+}

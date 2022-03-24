@@ -1,0 +1,38 @@
+/*Kali Linux: Red*/
+/*Kali/kali4.jpg*/
+body{
+    background:#1f1212;
+
+    background: #1f1212 url("../backgrounds/Kali/kali4.jpg") no-repeat;
+    
+    background-position: center;
+    background-size: cover;
+    
+}
+
+.incoming{
+    color: #ddd;    
+    border: 1px solid orange;
+}
+
+.outgoing{
+    color: #ddd;
+    border: 1px solid green;
+}
+
+.sender{
+    color: #003b46;
+    opacity: 1;
+}
+
+.msg{
+}
+
+.time{
+    color: #003b46;
+    opacity: 1;
+}
+
+.date{
+    color: #ad8;
+}

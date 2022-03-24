@@ -1,0 +1,38 @@
+/*Art: Blue Drops*/
+/*Art/black-n-blue.jpg*/
+body{
+    background:#1f1212;
+
+    background: #1f1212 url("../backgrounds/Art/black-n-blue.jpg") no-repeat;
+    
+    background-position: center;
+    background-size: cover;
+    
+}
+
+.incoming{
+    color: #ddd;    
+    border: 1px solid orange;
+}
+
+.outgoing{
+    color: #ddd;
+    border: 1px solid green;
+}
+
+.sender{
+    color: #aaa;
+    opacity: 0.5;
+}
+
+.msg{
+}
+
+.time{
+    color: #aaa;
+    opacity: 0.5;
+}
+
+.date{
+    color: #ad8;
+}

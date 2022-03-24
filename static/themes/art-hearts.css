@@ -1,0 +1,44 @@
+/*Art: Hearts on white*/
+/*Art/hearts2.jpg*/
+body{
+    background:#1f1212;
+
+    background: #1f1212 url("../backgrounds/Art/hearts2.jpg") no-repeat;
+    
+    background-position: center;
+    background-size: cover;
+    
+}
+
+.incoming{
+    color: #fff;
+    
+    background: #111;
+
+    opacity: 0.9;
+}
+
+.outgoing{
+    color: #fff;
+    
+    background: #121;
+    
+    opacity: 0.9;
+}
+
+.sender{
+    color: #ddd;
+    opacity: 0.8;
+}
+
+.msg{
+}
+
+.time{
+    color: #ddd;
+    opacity: 0.8;
+}
+
+.date{
+    color: #222;
+}

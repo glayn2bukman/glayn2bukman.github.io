@@ -1,0 +1,44 @@
+/*Nature: DNA*/
+/*Nature/dna.jpg*/
+body{
+    background:#1f1212;
+
+    background: #1f1212 url("../backgrounds/Nature/dna.jpg") no-repeat;
+    
+    background-position: center;
+    background-size: cover;
+    
+}
+
+.incoming{
+    color: #ddd;
+
+    background: #100;
+    
+    opacity: 0.8;
+}
+
+.outgoing{
+    color: #ddd;
+    
+    background: #010;
+    
+    opacity: 0.8;
+}
+
+.sender{
+    color: #f1f1f2;
+    opacity: 0.5;
+}
+
+.msg{
+}
+
+.time{
+    color: #a1d6e2;
+    opacity: 0.5;
+}
+
+.date{
+    color: #ad8;
+}

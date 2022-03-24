@@ -1,0 +1,43 @@
+/*Nature: Barkblue Droplets*/
+/*Nature/droplets.jpg*/
+body{
+    background:#1f1212;
+
+    background: #1f1212 url("../backgrounds/Nature/droplets.jpg") no-repeat;
+    
+    background-position: center;
+    background-size: cover;    
+}
+
+.incoming{
+    color: #ddd;
+
+    background: #063852;
+    
+    opacity: 0.8;
+}
+
+.outgoing{
+    color: #fff;
+    
+    background: #1e434c;
+    
+    opacity: 0.8;
+}
+
+.sender{
+    color: #ca1d6e2/*f0810f*/;
+    opacity: 0.5;
+}
+
+.msg{
+}
+
+.time{
+    color: #a1d6e2;
+    opacity: 0.5;
+}
+
+.date{
+    color: #ad8;
+}

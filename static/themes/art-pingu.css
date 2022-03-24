@@ -1,0 +1,46 @@
+/*Art: Pingu*/
+/*Art/pingu-art.jpg*/
+body{
+    background:#1f1212;
+
+    background: #1f1212 url("../backgrounds/Art/pingu-art.jpg") no-repeat;
+    
+    background-position: center;
+    background-size: cover;
+    
+}
+
+.incoming{
+    color: #ddd;  
+    
+    background: #421;
+
+    opacity: 0.95;
+}
+
+.outgoing{
+    color: #aaa;
+    
+    background: #111;
+    
+    opacity: 0.95;
+}
+
+.sender{
+    color: #fff;
+    opacity: 0.8;
+}
+
+.msg{
+}
+
+.time{
+    color: #fff;
+    opacity: 0.8;
+}
+
+.date{
+    color: #ddd;
+    background: #222;
+    border-radius:20%;
+}

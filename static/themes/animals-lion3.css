@@ -1,0 +1,42 @@
+/*Animal: Grey Lion*/
+/*Animals/lion3.jpg*/
+body{
+    background:#1f1212;
+
+    background: #1f1212 url("../backgrounds/Animals/lion3.jpg") no-repeat;
+    
+    background-position: center;
+    background-size: cover;
+    
+}
+
+.incoming{
+    color: #f98866;    
+
+    border: 1px solid orange;    
+}
+
+.outgoing{
+    color: #80bd9e;
+
+    border: 1px solid red;
+}
+
+.sender{
+    color: #0f0;
+    opacity: 0.7;
+}
+
+.msg{
+}
+
+.time{
+    color: #0f0;
+    opacity: 0.7;
+}
+
+.date{
+    color: #2a3132;
+    background: #90afc5;
+    border-radius: 7px;
+}

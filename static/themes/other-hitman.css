@@ -1,0 +1,42 @@
+/*Other: Hitman*/
+/*Other/hitman.jpg*/
+body{
+    background:#1f1212;
+
+    background: #1f1212 url("../backgrounds/Other/hitman.jpg") no-repeat;
+    
+    background-position: center;
+    background-size: cover;
+    
+}
+
+.incoming{
+    color: #ddd;
+
+    background:#111;
+    opacity: 0.8;
+}
+
+.outgoing{
+    color: #ddd;
+    
+    background:#000;
+    opacity: 0.8;
+}
+
+.sender{
+    color: #db9501;
+    opacity: 0.5;
+}
+
+.msg{
+}
+
+.time{
+    color: #db9501;
+    opacity: 0.5;
+}
+
+.date{
+    color: #ad8;
+}

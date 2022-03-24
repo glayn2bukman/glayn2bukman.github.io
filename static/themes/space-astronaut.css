@@ -1,0 +1,42 @@
+/*Space: Astronaut*/
+/*Space/astronaut.jpg*/
+body{
+    background:#1f1212;
+
+    background: #1f1212 url("../backgrounds/Space/astronaut.jpg") no-repeat;
+    
+    background-position: center;
+    background-size: cover;
+    
+}
+
+.incoming{
+    color: #ddd;
+
+    background:#111;
+    opacity: 0.8;
+}
+
+.outgoing{
+    color: #ddd;
+    
+    background:#000;
+    opacity: 0.8;
+}
+
+.sender{
+    color: #e4ea8c;
+    opacity: 0.5;
+}
+
+.msg{
+}
+
+.time{
+    color: #e4ea8c;
+    opacity: 0.5;
+}
+
+.date{
+    color: #ad8;
+}

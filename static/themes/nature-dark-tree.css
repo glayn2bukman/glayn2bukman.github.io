@@ -1,0 +1,46 @@
+/*Nature: Ghost Tree*/
+/*Nature/dark-tree.jpg*/
+body{
+    background:#1f1212;
+
+    background: #1f1212 url("../backgrounds/Nature/dark-tree.jpg") no-repeat;
+    
+    background-position: center;
+    background-size: cover;
+    
+}
+
+.incoming{
+    color: #ddd;    
+    border: 1px solid orange;
+
+    background: #111;
+    
+    opacity: 0.8;
+}
+
+.outgoing{
+    color: #ddd;
+    border: 1px solid green;
+    
+    background: #111;
+    
+    opacity: 0.8;
+}
+
+.sender{
+    color: #aaa;
+    opacity: 0.5;
+}
+
+.msg{
+}
+
+.time{
+    color: #0f0;
+    opacity: 0.5;
+}
+
+.date{
+    color: #ad8;
+}

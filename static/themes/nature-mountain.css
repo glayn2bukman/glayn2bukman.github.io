@@ -1,0 +1,44 @@
+/*Nature: Mountain*/
+/*Nature/mountain.jpg*/
+body{
+    background:#1f1212;
+
+    background: #1f1212 url("../backgrounds/Nature/mountain.jpg") no-repeat;
+    
+    background-position: center;
+    background-size: cover;
+    
+}
+
+.incoming{
+    color: #ddd;
+
+    background: #063852;
+    
+    opacity: 0.8;
+}
+
+.outgoing{
+    color: #fff;
+    
+    background: #2d4262;
+    
+    opacity: 0.8;
+}
+
+.sender{
+    color: #d08693;
+    opacity: 0.5;
+}
+
+.msg{
+}
+
+.time{
+    color: #d08693;
+    opacity: 0.5;
+}
+
+.date{
+    color: #ad8;
+}

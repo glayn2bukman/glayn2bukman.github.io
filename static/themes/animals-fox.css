@@ -1,0 +1,46 @@
+/*Animal: Blue Fox*/
+/*Animals/fox.jpg*/
+body{
+    background:#1f1212;
+
+    background: #1f1212 url("../backgrounds/Animals/fox.jpg") no-repeat;
+    
+    background-position: center;
+    background-size: cover;
+    
+}
+
+.incoming{
+    color: #ad8;    
+
+    background: #111;
+    
+    opacity: 0.9;
+}
+
+.outgoing{
+    color: #bbb;
+    
+    background: #111;
+    
+    opacity: 0.9;
+}
+
+.sender{
+    color: #aaa;
+    opacity: 0.7;
+}
+
+.msg{
+}
+
+.time{
+    color: #aaa;
+    opacity: 0.7;
+}
+
+.date{
+    color: #d78;
+    background: #111;
+    border-radius:5px;
+}

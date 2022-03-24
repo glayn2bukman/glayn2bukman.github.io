@@ -1,0 +1,46 @@
+/*Animal: Brown Lion*/
+/*Animals/lion2.jpg*/
+body{
+    background:#1f1212;
+
+    background: #1f1212 url("../backgrounds/Animals/lion2.jpg") no-repeat;
+    
+    background-position: center;
+    background-size: cover;
+    
+}
+
+.incoming{
+    color: #ddd;    
+
+    background: #220;
+    
+    opacity: 0.8;
+}
+
+.outgoing{
+    color: #ddd;
+
+    background: #022;
+    
+    opacity: 0.8;
+}
+
+.sender{
+    color: #0f0;
+    opacity: 0.9;
+}
+
+.msg{
+}
+
+.time{
+    color: #0f0;
+    opacity: 0.9;
+}
+
+.date{
+    color: #472;
+    background: #fff;
+    border-radius: 7px;
+}
