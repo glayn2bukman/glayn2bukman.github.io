@@ -7,7 +7,7 @@
 
 var REVISION = "0.0.1";
 
-var HOST = "http://212.71.237.183:60101/";
+var HOST = "https://twebale.com/pchat-api/";
     //HOST = "http://localhost:60101/";
     //HOST = "http://192.168.43.208:60101/";
 
