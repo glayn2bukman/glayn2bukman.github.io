@@ -37,7 +37,7 @@ var CHATS = {}
 var USER_THEMES = [];
 
 var CHECK_ONLINE_STATUS_RATE = 10; // seconds
-var INBOX_READ_RATE = 20; // in seconds
+var INBOX_READ_RATE = 15; // in seconds
 var INBOX_READ_INTERVAL_VAR;
 
 var LAST_ACTIVE_GROUP = ""; // will help us not reload themes when user logs out and login again
@@ -948,6 +948,7 @@ function got_inbox(){
         }
 
         write_local_data('inbox_last_fetch',reply.inbox_last_fetch,function(){},function(){});
+        INBOX_LAST_FETCH = reply.inbox_last_fetch;
 
         var chats_div = document.getElementById("chats");
         var chat_div, date_div;
@@ -1134,15 +1135,9 @@ function get_inbox(){
     
     var form = new FormData();
     form.append("uname", UNAME+grp);
-    
-    function _send_form(){req.send(form);}
-    
-    read_local_data('inbox_last_fetch',_send_form,function(inbox_last_fetch){
-        form.append("inbox_last_fetch", inbox_last_fetch);
-        _send_form();
-    });
-    
-    //req.send(form);
+    form.append("inbox_last_fetch", INBOX_LAST_FETCH);
+        
+    req.send(form);
     
 }
 
