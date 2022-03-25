@@ -37,7 +37,7 @@ var CHATS = {}
 var USER_THEMES = [];
 
 var CHECK_ONLINE_STATUS_RATE = 10; // seconds
-var INBOX_READ_RATE = 10; // in seconds
+var INBOX_READ_RATE = 20; // in seconds
 var INBOX_READ_INTERVAL_VAR;
 
 var LAST_ACTIVE_GROUP = ""; // will help us not reload themes when user logs out and login again
@@ -138,6 +138,8 @@ var CAPTION_TARGET = null;
 var staticCryptModule; // will represent the loaded staticCrypt wasm file
 var staticCryptLoaded = false;
 var staticCryptLoading = false;
+
+var INBOX_LAST_FETCH = 0;
 
 function generate_reference_id(fname){
     let xters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -945,6 +947,8 @@ function got_inbox(){
             return;
         }
 
+        write_local_data('inbox_last_fetch',reply.inbox_last_fetch,function(){},function(){});
+
         var chats_div = document.getElementById("chats");
         var chat_div, date_div;
 
@@ -1117,7 +1121,6 @@ function got_inbox(){
     }
 }
 
-
 function get_inbox(){
     
     var grp = document.getElementById("__group__").value;
@@ -1132,7 +1135,14 @@ function get_inbox(){
     var form = new FormData();
     form.append("uname", UNAME+grp);
     
-    req.send(form);
+    function _send_form(){req.send(form);}
+    
+    read_local_data('inbox_last_fetch',_send_form,function(inbox_last_fetch){
+        form.append("inbox_last_fetch", inbox_last_fetch);
+        _send_form();
+    });
+    
+    //req.send(form);
     
 }
 
