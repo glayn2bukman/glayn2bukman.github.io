@@ -1203,6 +1203,7 @@ function back(){
 
     if ("none"==document.getElementById("chats").style.display) // logout...
     {
+        /*
         if("block"==document.getElementById("login-div").style.display){
             document.getElementById("sure_modal_title").innerHTML = "Leave App";
         }else{
@@ -1210,18 +1211,26 @@ function back(){
         }
         show_modal("sure_modal");
         sure_modal_action = _to_calc
+        */
+        _to_calc();
     }
 
     else // return to groups...
     {        
         if(ACTIVE_GROUP){
+            /*
             document.getElementById("sure_modal_title").innerHTML = "Leave Chat";
             show_modal("sure_modal");
             sure_modal_action = _to_grps;
+            */
+            _to_grps();
         }else{
+            /*
             document.getElementById("sure_modal_title").innerHTML = "Logout";
             show_modal("sure_modal");
             sure_modal_action = _to_calc;
+            */
+            _to_calc();
         }
     }
 
