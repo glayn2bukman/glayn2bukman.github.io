@@ -1,4 +1,4 @@
-var changeToForcePWAUpdate = "2"; // increment to force PWA to update
+var changeToForcePWAUpdate = "3"; // increment to force PWA to update
 
 var cacheName = 'calc-pwa';
 var filesToCache = [
