@@ -2462,4 +2462,6 @@ window.onload = function(){
         }, false);
     }
 
+
+    window.resizeTo(360,700); // only for desktop installed apps
 }
