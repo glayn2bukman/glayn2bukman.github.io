@@ -44,7 +44,7 @@ var LAST_ACTIVE_GROUP = ""; // will help us not reload themes when user logs out
 
 var __EMBEDDED__ = false; // set to true if application is embedded in another app
 
-var CALC_EXIT_CODE = "1.000.1"; // should be resettable from app
+var CALC_EXIT_CODE = "0.0.0.0"; // should be resettable from app
 
 var _notification_uname="";
 
